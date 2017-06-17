@@ -283,7 +283,14 @@ bool CHL2GameMovement::ContinueForcedMove()
 //-----------------------------------------------------------------------------
 bool CHL2GameMovement::OnLadder( trace_t &trace )
 {
+#if defined(HYPERBOREA)
+	if (GetLadder() == nullptr)
+		return BaseClass::OnLadder(trace);
+	else
+		return true;
+#else
 	return ( GetLadder() != NULL ) ? true : false;
+#endif // HYPERBOREA
 }
 
 //-----------------------------------------------------------------------------
@@ -522,6 +529,13 @@ bool CHL2GameMovement::ExitLadderViaDismountNode( CFuncLadder *ladder, bool stri
 //-----------------------------------------------------------------------------
 void CHL2GameMovement::FullLadderMove()
 {
+#if defined(HYPERBOREA)
+	if (GetLadder() == nullptr)
+	{
+		BaseClass::FullLadderMove();
+		return;
+	}
+#endif // HYPERBOREA
 #if !defined( CLIENT_DLL )
 	CFuncLadder *ladder = GetLadder();
 	Assert( ladder );
@@ -883,11 +897,14 @@ bool CHL2GameMovement::CheckLadderAutoMount( CFuncLadder *ladder, const Vector& 
 //-----------------------------------------------------------------------------
 bool CHL2GameMovement::LadderMove( void )
 {
-
 	if ( player->GetMoveType() == MOVETYPE_NOCLIP )
 	{
 		SetLadder( NULL );
+#if defined(HYPERBOREA)
+		return BaseClass::LadderMove();
+#else
 		return false;
+#endif // HYPERBOREA
 	}
 
 	// If being forced to mount/dismount continue to act like we are on the ladder
@@ -954,7 +971,11 @@ bool CHL2GameMovement::LadderMove( void )
 			}
 		}
 
+#if defined(HYPERBOREA)
+		return BaseClass::LadderMove();
+#else
 		return false;
+#endif // HYPERBOREA
 	}
 
 	if ( !ladder && 
@@ -968,7 +989,11 @@ bool CHL2GameMovement::LadderMove( void )
 	ladder = GetLadder();
 	if ( !ladder )
 	{
+#if defined(HYPERBOREA)
+		return BaseClass::LadderMove();
+#else
 		return false;
+#endif // HYPERBOREA
 	}
 
 	// Don't play the deny sound
@@ -1032,7 +1057,11 @@ bool CHL2GameMovement::LadderMove( void )
 		{
 			mv->m_vecVelocity.z = mv->m_vecVelocity.z + 50;
 		}
+#if defined(HYPERBOREA)
+		return BaseClass::LadderMove();
+#else
 		return false;
+#endif // HYPERBOREA
 	}
 
 	if ( forwardSpeed != 0 || rightSpeed != 0 )
@@ -1064,7 +1093,11 @@ bool CHL2GameMovement::LadderMove( void )
 			player->SetMoveType( MOVETYPE_WALK );
 			// Remove from ladder
 			SetLadder( NULL );
+#if defined(HYPERBOREA)
+			return BaseClass::LadderMove();
+#else
 			return false;
+#endif // HYPERBOREA
 		}
 
 		bool ishorizontal = fabs( topPosition.z - bottomPosition.z ) < 64.0f ? true : false;

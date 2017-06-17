@@ -116,7 +116,13 @@ public:
 	// Handle view smoothing when going up stairs
 	void				SmoothViewOnStairs( Vector& eyeOrigin );
 	virtual float		CalcRoll (const QAngle& angles, const Vector& velocity, float rollangle, float rollspeed);
+
+#if defined(HYPERBOREA)
+	virtual void CalcViewRoll(QAngle& eyeAngles);
+#else
 	void				CalcViewRoll( QAngle& eyeAngles );
+#endif // HYPERBOREA
+
 	void				CreateWaterEffects( void );
 
 	virtual void			SetPlayerUnderwater( bool state );
@@ -445,9 +451,15 @@ public:
 
 protected:
 
-	void				CalcPlayerView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov );
+#if defined(HYPERBOREA)
+	virtual void CalcPlayerView(Vector& eyeOrigin, QAngle& eyeAngles, float& fov);
+	virtual void CalcVehicleView(IClientVehicle* pVehicle, Vector& eyeOrigin, QAngle& eyeAngles,float& zNear, float& zFar, float& fov);
+#else
+	void				CalcPlayerView(Vector& eyeOrigin, QAngle& eyeAngles, float& fov);
 	void				CalcVehicleView(IClientVehicle *pVehicle, Vector& eyeOrigin, QAngle& eyeAngles,
-							float& zNear, float& zFar, float& fov );
+							float& zNear, float& zFar, float& fov);
+#endif // HYPERBOREA
+
 	virtual void		CalcObserverView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov );
 	virtual Vector		GetChaseCamViewOffset( CBaseEntity *target );
 	void				CalcChaseCamView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov );

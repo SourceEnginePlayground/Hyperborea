@@ -437,9 +437,14 @@ private:
 						int x, int y, int width, int height );
 
 	// Drawing primitives
-	bool			ShouldDrawViewModel( bool drawViewmodel );
-	void			DrawViewModels( const CViewSetup &view, bool drawViewmodel );
-
+#if defined(HYPERBOREA)
+public:
+#endif // HYPERBOREA
+	bool			ShouldDrawViewModel(bool drawViewmodel);
+	void			DrawViewModels(const CViewSetup &view, bool drawViewmodel);
+#if defined(HYPERBOREA)
+private:
+#endif // HYPERBOREA
 	void			PerformScreenSpaceEffects( int x, int y, int w, int h );
 
 	// Overlays

@@ -1,0 +1,13 @@
+"Interface.Music"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_NONE"
+	"rndwave"
+	{
+		"wave"		"*#interface\music\breathing01.wav"
+		"wave"		"*#interface\music\breathing02.wav"
+		"wave"		"*#interface\music\breathing03.wav"
+	}
+}

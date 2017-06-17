@@ -20,6 +20,10 @@
 #include "items.h"
 #include "hl2_gamerules.h"
 
+#if defined(HYPERBOREA)
+#include "filesystem.h"
+#endif // HYPERBOREA
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -570,8 +574,22 @@ bool CNPC_MetroPolice::OverrideMoveFacing( const AILocalMoveGoal_t &move, float 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CNPC_MetroPolice::Precache( void )
+void CNPC_MetroPolice::Precache(void)
 {
+#if defined(HYPERBOREA)
+	const char* ElitePoliceModel = "models/elitepolice.mdl";
+	if (filesystem->FileExists(ElitePoliceModel, "MOD") == true && (random->RandomInt(1, 2) % 2))
+	{
+		SetModelName(AllocPooledString(ElitePoliceModel));
+	}
+	else
+	{
+		if (HasSpawnFlags(SF_NPC_START_EFFICIENT) == true)
+			SetModelName(AllocPooledString("models/police_cheaple.mdl"));
+		else
+			SetModelName(AllocPooledString("models/police.mdl"));
+	}
+#else
 	if ( HasSpawnFlags( SF_NPC_START_EFFICIENT ) )
 	{
 		SetModelName( AllocPooledString("models/police_cheaple.mdl" ) );
@@ -580,6 +598,7 @@ void CNPC_MetroPolice::Precache( void )
 	{
 		SetModelName( AllocPooledString("models/police.mdl") );
 	}
+#endif // HYPERBOREA
 
 	PrecacheModel( STRING( GetModelName() ) );
 

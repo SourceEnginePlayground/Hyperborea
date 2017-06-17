@@ -1,0 +1,17 @@
+"Survival"
+{
+	"settings"
+	{
+		"weapons" "weapon_pistol;weapon_crowbar;weapon_smg1"
+	}
+
+	"ammo"
+	{
+		"Pistol" "100"
+	}
+
+	"entity"
+	{
+		"classname" "npc_strider"
+	}
+}

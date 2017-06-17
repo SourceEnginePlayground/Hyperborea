@@ -77,6 +77,14 @@
 // Projective textures
 #include "C_Env_Projected_Texture.h"
 
+#if defined(GAMEUI2)
+#include "igameui2.h"
+#endif // GAMEUI2
+
+#if defined(HYPERBOREA)
+#include "ShaderEditor/ShaderEditorSystem.h"
+#endif // HYPERBOREA
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -480,6 +488,10 @@ protected:
 
 	void			SSAO_DepthPass();
 	void			DrawDepthOfField();
+
+#if defined(HYPERBOREA)
+	virtual void	DepthBuffer();
+#endif // HYPERBOREA
 };
 
 
@@ -1359,6 +1371,14 @@ void CViewRender::ViewDrawScene( bool bDrew3dSkybox, SkyboxVisibility_t nSkyboxV
 
 	DrawWorldAndEntities( drawSkybox, view, nClearFlags, pCustomVisibility );
 
+#if defined(HYPERBOREA)
+	VisibleFogVolumeInfo_t fogVolumeInfo;
+	render->GetVisibleFogVolume(view.origin, &fogVolumeInfo);
+	WaterRenderInfo_t info;
+	DetermineWaterRenderInfo(fogVolumeInfo, info);
+	g_ShaderEditorSystem->CustomViewRender(&g_CurrentViewID, fogVolumeInfo, info);
+#endif // HYPERBOREA
+
 	// Disable fog for the rest of the stuff
 	DisableFog();
 
@@ -1985,6 +2005,10 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
 		if ( ( bDrew3dSkybox = pSkyView->Setup( view, &nClearFlags, &nSkyboxVisible ) ) != false )
 		{
 			AddViewToScene( pSkyView );
+
+#if defined(HYPERBOREA)
+			g_ShaderEditorSystem->UpdateSkymask(false);
+#endif // HYPERBOREA
 		}
 		SafeRelease( pSkyView );
 
@@ -2042,6 +2066,10 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
 		// Now actually draw the viewmodel
 		DrawViewModels( view, whatToDraw & RENDERVIEW_DRAWVIEWMODEL );
 
+#if defined(HYPERBOREA)
+		g_ShaderEditorSystem->UpdateSkymask(bDrew3dSkybox);
+#endif // HYPERBOREA
+
 		DrawUnderwaterOverlay();
 
 		PixelVisibility_EndScene();
@@ -2078,6 +2106,10 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
 			}
 			pRenderContext.SafeRelease();
 		}
+
+#if defined(HYPERBOREA)
+		g_ShaderEditorSystem->CustomPostRender();
+#endif // HYPERBOREA
 
 		// And here are the screen-space effects
 
@@ -2176,6 +2208,29 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
 	{
 		saveRenderTarget = g_pSourceVR->GetRenderTarget( (ISourceVirtualReality::VREye)(view.m_eStereoEye - 1), ISourceVirtualReality::RT_Color );
 	}
+
+#if defined(GAMEUI2)
+	if (GameUI2 != nullptr)
+	{
+		GameUI2->SetFrustum(GetFrustum());
+		GameUI2->SetView(view);
+
+		if (materials->GetRenderContext() != nullptr)
+			GameUI2->SetRenderContext(materials->GetRenderContext());
+		
+		ITexture* GameUI2MaskTexture = materials->FindTexture("_rt_MaskGameUI", TEXTURE_GROUP_RENDER_TARGET);
+		if (GameUI2MaskTexture != nullptr)
+		{
+			CMatRenderContextPtr RenderContext(materials);
+			RenderContext->PushRenderTargetAndViewport(GameUI2MaskTexture);
+			RenderContext->ClearColor4ub(0, 0, 0, 255);
+			RenderContext->ClearBuffers(true, true, true);
+			RenderContext->PopRenderTargetAndViewport();
+
+			GameUI2->SetMaskTexture(GameUI2MaskTexture);
+		}
+	}
+#endif // GAMEUI2
 
 	// Draw the 2D graphics
 	render->Push2DView( view, 0, saveRenderTarget, GetFrustum() );
@@ -4024,8 +4079,13 @@ void CRendering3dView::DrawOpaqueRenderables( ERenderDepthMode DepthMode )
 					arrRenderEntsNpcsFirst[ numNpcs ++ ] = *itEntity;
 					arrBoneSetupNpcsLast[ numOpaqueEnts - numNpcs ] = pba;
 					
-					itEntity->m_pRenderable = NULL;		// We will render NPCs separately
-					itEntity->m_RenderHandle = NULL;
+#if defined(HYPERBOREA)
+					if (DepthMode != DEPTH_MODE_SSA0)
+#endif // HYPERBOREA
+					{
+						itEntity->m_pRenderable = NULL;		// We will render NPCs separately
+						itEntity->m_RenderHandle = NULL;
+					}
 					
 					continue;
 				}
@@ -5314,6 +5374,11 @@ void CBaseWorldView::DrawSetup( float waterHeight, int nSetupFlags, float waterZ
 	}
 #endif
 
+#if defined(HYPERBOREA)
+	if (savedViewID == VIEW_MAIN)
+		DepthBuffer();
+#endif // HYPERBOREA
+
 	g_CurrentViewID = savedViewID;
 }
 
@@ -5437,6 +5502,61 @@ void CBaseWorldView::DrawExecute( float waterHeight, view_id_t viewID, float wat
 #endif
 }
 
+#if defined(HYPERBOREA)
+void CBaseWorldView::DepthBuffer()
+{
+	if (!g_pMaterialSystemHardwareConfig->SupportsShaderModel_3_0())
+		return;
+
+	VPROF_BUDGET("CSimpleWorldView::DepthBuffer", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING);
+
+	int SavedViewID = g_CurrentViewID;
+	g_CurrentViewID = VIEW_SSAO;
+
+	ITexture* DepthBufferTexture = materials->FindTexture("_rt_DepthBuffer", TEXTURE_GROUP_RENDER_TARGET);
+	if (!DepthBufferTexture)
+		return;
+
+	CMatRenderContextPtr RenderContext(materials);
+	RenderContext->ClearColor4ub(255, 255, 255, 255);
+	RenderContext.SafeRelease();
+
+	render->Push3DView((*this), VIEW_CLEAR_DEPTH | VIEW_CLEAR_COLOR, DepthBufferTexture, GetFrustum());
+
+	MDLCACHE_CRITICAL_SECTION();
+
+	engine->Sound_ExtraUpdate(); // Make sure sound doesn't stutter
+
+	m_DrawFlags |= DF_SSAO_DEPTH_PASS;
+
+	VPROF_BUDGET("DrawWorld", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING);
+	DrawWorld(0.0f);
+
+	// Draw opaque and translucent renderables with appropriate override materials
+	// OVERRIDE_SSAO_DEPTH_WRITE is OK with a NULL material pointer
+	modelrender->ForcedMaterialOverride(nullptr, OVERRIDE_SSAO_DEPTH_WRITE);
+
+	VPROF_BUDGET("DrawOpaqueRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING);
+	DrawOpaqueRenderables(DEPTH_MODE_SSA0);
+
+	VPROF_BUDGET("DrawTranslucentRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING);
+	DrawTranslucentRenderables(false, true);
+
+	m_pMainView->DrawViewModels(*m_pMainView->GetViewSetup(), true);
+
+	modelrender->ForcedMaterialOverride(nullptr);
+
+	m_DrawFlags &= ~DF_SSAO_DEPTH_PASS;
+
+	RenderContext.GetFrom(materials);
+
+	render->PopView(GetFrustum());
+
+	RenderContext.SafeRelease();
+
+	g_CurrentViewID = SavedViewID;
+}
+#endif // HYPERBOREA
 
 void CBaseWorldView::SSAO_DepthPass()
 {

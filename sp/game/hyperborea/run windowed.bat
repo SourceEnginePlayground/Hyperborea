@@ -1,0 +1,1 @@
+"D:\Steam\steamapps\common\Source SDK Base 2013 Singleplayer\hl2.exe" -game %~dp0 -windowed -w 1366 -h 768 +fps_max 61
