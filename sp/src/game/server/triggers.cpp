@@ -2828,6 +2828,10 @@ private:
 
 private:
 	COutputEvent m_OnEndFollow;
+
+#if defined(HYPERBOREA)
+	virtual void UpdateCameraAnimation();
+#endif // HYPERBOREA
 };
 
 #if HL2_EPISODIC
@@ -2872,6 +2876,10 @@ BEGIN_DATADESC( CTriggerCamera )
 	DEFINE_FUNCTION( FollowTarget ),
 	DEFINE_OUTPUT( m_OnEndFollow, "OnEndFollow" ),
 
+#if defined(HYPERBOREA)
+	DEFINE_THINKFUNC(UpdateCameraAnimation),
+#endif // HYPERBOREA
+
 END_DATADESC()
 
 //-----------------------------------------------------------------------------
@@ -2897,7 +2905,25 @@ void CTriggerCamera::Spawn( void )
 		m_deceleration = 500;
 
 	DispatchUpdateTransmitState();
+
+#if defined(HYPERBOREA)
+	ConColorMsg(Color(150, 255, 50, 255), "CTriggerCamera is trying to call UpdateCameraAnimation\n");
+	SetThink(&CTriggerCamera::UpdateCameraAnimation);
+	SetNextThink(gpGlobals->curtime);
+#endif // HYPERBOREA
 }
+
+#if defined(HYPERBOREA)
+void CTriggerCamera::UpdateCameraAnimation()
+{
+	QAngle AnimatedCameraAngle = GetAbsAngles();
+	AnimatedCameraAngle[ROLL] += 0.01 * cos(gpGlobals->curtime * 0.5) * 0.1;
+	AnimatedCameraAngle[PITCH] += 0.01 * cos(gpGlobals->curtime * 1.0) * 0.3;
+	AnimatedCameraAngle[YAW] += 0.01 * cos(gpGlobals->curtime * 2.0) * 0.3;
+	SetAbsAngles(AnimatedCameraAngle);
+	SetNextThink(gpGlobals->curtime + gpGlobals->frametime);
+}
+#endif // HYPERBOREA
 
 int CTriggerCamera::UpdateTransmitState()
 {

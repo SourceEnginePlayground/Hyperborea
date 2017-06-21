@@ -57,6 +57,9 @@ private:
 	CPanelAnimationVar(Color, DescriptionColor, "DescriptionColor", "0 0 0 0");
 	CPanelAnimationVar(Color, BackgroundBlurAlpha, "BackgroundBlurAlpha", "0 0 0 0");
 
+	CPanelAnimationVar(float, DescriptionOffsetX, "DescriptionOffsetX", "0");
+	CPanelAnimationVar(float, DescriptionOffsetY, "DescriptionOffsetY", "0");
+
 	float WidthOut;
 	float WidthOver;
 	float WidthPressed;
@@ -70,8 +73,17 @@ private:
 	float TextOffsetX;
 	float TextOffsetY;
 
-	float DescriptionOffsetX;
-	float DescriptionOffsetY;
+//	float DescriptionOffsetX;
+//	float DescriptionOffsetY;
+	float DescriptionOffsetXOut;
+	float DescriptionOffsetXOver;
+	float DescriptionOffsetXPressed;
+	float DescriptionOffsetXReleased;
+
+	float DescriptionOffsetYOut;
+	float DescriptionOffsetYOver;
+	float DescriptionOffsetYPressed;
+	float DescriptionOffsetYReleased;
 
 	bool bDescriptionHideOut;
 	bool bDescriptionHideOver;

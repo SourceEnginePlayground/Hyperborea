@@ -76,8 +76,17 @@ void Button_MainMenu::ApplySchemeSettings(vgui::IScheme* Scheme)
 	TextOffsetX = atof(Scheme->GetResourceString("MainMenu.Button.Text.OffsetX"));
 	TextOffsetY = atof(Scheme->GetResourceString("MainMenu.Button.Text.OffsetY"));
 
-	DescriptionOffsetX = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetX"));
-	DescriptionOffsetY = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetY"));
+//	DescriptionOffsetX = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetX"));
+//	DescriptionOffsetY = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetY"));
+	DescriptionOffsetX = DescriptionOffsetXOut = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetX.Out"));
+	DescriptionOffsetXOver = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetX.Over"));
+	DescriptionOffsetXPressed = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetX.Pressed"));
+	DescriptionOffsetXReleased = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetX.Released"));
+
+	DescriptionOffsetY = DescriptionOffsetYOut = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetY.Out"));
+	DescriptionOffsetYOver = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetY.Over"));
+	DescriptionOffsetYPressed = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetY.Pressed"));
+	DescriptionOffsetYReleased = atof(Scheme->GetResourceString("MainMenu.Button.Description.OffsetY.Released"));
 
 	bDescriptionHideOut = atoi(Scheme->GetResourceString("MainMenu.Button.Description.Hide.Out"));
 	bDescriptionHideOver = atoi(Scheme->GetResourceString("MainMenu.Button.Description.Hide.Over"));
@@ -143,6 +152,9 @@ void Button_MainMenu::Animations()
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "TextGlowColor", TextGlowColorOut, 0.0f, AnimationText, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionColor", DescriptionColorOut, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "BackgroundBlurAlpha", bBackgroundBlurOut ? Color(255, 255, 255, 255) : Color(0, 0, 0, 0), 0.0f, AnimationBackground, vgui::AnimationController::INTERPOLATOR_LINEAR);
+
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetX", DescriptionOffsetXOut, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetY", DescriptionOffsetYOut, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
 				break;
 
 			case Over:
@@ -154,6 +166,9 @@ void Button_MainMenu::Animations()
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "TextGlowColor", TextGlowColorOver, 0.0f, AnimationText, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionColor", DescriptionColorOver, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "BackgroundBlurAlpha", bBackgroundBlurOver ? Color(255, 255, 255, 255) : Color(0, 0, 0, 0), 0.0f, AnimationBackground, vgui::AnimationController::INTERPOLATOR_LINEAR);
+
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetX", DescriptionOffsetXOver, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetY", DescriptionOffsetYOver, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
 				break;
 
 			case Pressed:
@@ -165,6 +180,9 @@ void Button_MainMenu::Animations()
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "TextGlowColor", TextGlowColorPressed, 0.0f, AnimationText, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionColor", DescriptionColorPressed, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "BackgroundBlurAlpha", bBackgroundBlurPressed ? Color(255, 255, 255, 255) : Color(0, 0, 0, 0), 0.0f, AnimationBackground, vgui::AnimationController::INTERPOLATOR_LINEAR);
+
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetX", DescriptionOffsetXPressed, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetY", DescriptionOffsetYPressed, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
 				break;
 
 			case Released:
@@ -176,6 +194,9 @@ void Button_MainMenu::Animations()
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "TextGlowColor", TextGlowColorReleased, 0.0f, AnimationText, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionColor", DescriptionColorReleased, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "BackgroundBlurAlpha", bBackgroundBlurReleased ? Color(255, 255, 255, 255) : Color(0, 0, 0, 0), 0.0f, AnimationBackground, vgui::AnimationController::INTERPOLATOR_LINEAR);
+
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetX", DescriptionOffsetXReleased, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetY", DescriptionOffsetYReleased, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
 				break;
 
 			default:
@@ -187,6 +208,9 @@ void Button_MainMenu::Animations()
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "TextGlowColor", TextGlowColorOut, 0.0f, AnimationText, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionColor", DescriptionColorOut, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_LINEAR);
 				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "BackgroundBlurAlpha", bBackgroundBlurOut ? Color(255, 255, 255, 255) : Color(0, 0, 0, 0), 0.0f, AnimationBackground, vgui::AnimationController::INTERPOLATOR_LINEAR);
+
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetX", DescriptionOffsetXOut, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
+				GetGameUI2().GetAnimationController()->RunAnimationCommand(this, "DescriptionOffsetY", DescriptionOffsetYOut, 0.0f, AnimationDescription, vgui::AnimationController::INTERPOLATOR_SIMPLESPLINE);
 				break;
 		}
 

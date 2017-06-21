@@ -25,8 +25,18 @@
 		"MainMenu.Button.Text.OffsetX"					"3" // "-1" // "10"
 		"MainMenu.Button.Text.OffsetY"					"-6" // "0"
 
-		"MainMenu.Button.Description.OffsetX"			"1"
-		"MainMenu.Button.Description.OffsetY"			"-5" // "-3"
+	//	"MainMenu.Button.Description.OffsetX"			"1"
+	//	"MainMenu.Button.Description.OffsetY"			"-5" // "-3"
+
+		"MainMenu.Button.Description.OffsetX.Out"		"31"
+		"MainMenu.Button.Description.OffsetX.Over"		"1"
+		"MainMenu.Button.Description.OffsetX.Pressed"	"1"
+		"MainMenu.Button.Description.OffsetX.Released"	"1"
+
+		"MainMenu.Button.Description.OffsetY.Out"		"-5"
+		"MainMenu.Button.Description.OffsetY.Over"		"-5"
+		"MainMenu.Button.Description.OffsetY.Pressed"	"-5"
+		"MainMenu.Button.Description.OffsetY.Released"	"-5"
 
 		"MainMenu.Button.Description.Hide.Out"			"1"
 		"MainMenu.Button.Description.Hide.Over"			"0"
@@ -65,15 +75,15 @@
 		"MainMenu.Button.Text.Pressed"					"255 211 109 255"
 		"MainMenu.Button.Text.Released"					"255 217 73 255"
 
-		"MainMenu.Button.Text.Glow.Out"					"255 186 33 0"
-		"MainMenu.Button.Text.Glow.Over"				"255 186 33 255"
-		"MainMenu.Button.Text.Glow.Pressed"				"255 186 33 0"
-		"MainMenu.Button.Text.Glow.Released"			"255 186 33 0"
+		"MainMenu.Button.Text.Glow.Out"					"0 0 0 0" // "255 186 33 0"
+		"MainMenu.Button.Text.Glow.Over"				"0 0 0 0" // "255 186 33 255"
+		"MainMenu.Button.Text.Glow.Pressed"				"0 0 0 0" // "255 186 33 0"
+		"MainMenu.Button.Text.Glow.Released"			"0 0 0 0" // "255 186 33 0"
 
 		"MainMenu.Button.Description.Out"				"0 0 0 0"
 		"MainMenu.Button.Description.Over"				"180 180 180 200"
-		"MainMenu.Button.Description.Pressed"			"180 180 180 200"
-		"MainMenu.Button.Description.Released"			"180 180 180 200"
+		"MainMenu.Button.Description.Pressed"			"0 0 0 0"
+		"MainMenu.Button.Description.Released"			"0 0 0 0"
 	}
 	
 	"Fonts"
