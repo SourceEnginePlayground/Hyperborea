@@ -8,6 +8,7 @@ $Macro SRCDIR		"..\.."
 $Macro GAMENAME 	"hyperborea"
 
 $Include "$SRCDIR\game\server\server_base.vpc"
+$Include "$SRCDIR\game\server\nav_mesh.vpc" [$SOURCESDK]
 
 $Configuration
 {
