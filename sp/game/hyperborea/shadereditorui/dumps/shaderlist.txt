@@ -1,7 +1,8 @@
 "shaderlist"
 {
 	"shader_000"		"fringe"
-	"shader_001"		"gauss_blur_13_half_aceil_x"
-	"shader_002"		"gauss_blur_13_half_aceil_y"
-	"shader_003"		"gui_blur_blend"
+	"shader_001"		"fxaa"
+	"shader_002"		"gauss_blur_13_half_aceil_x"
+	"shader_003"		"gauss_blur_13_half_aceil_y"
+	"shader_004"		"gui_blur_blend"
 }
