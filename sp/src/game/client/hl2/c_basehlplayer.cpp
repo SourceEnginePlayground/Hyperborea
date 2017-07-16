@@ -658,10 +658,11 @@ void C_BaseHLPlayer::CalcVehicleView(IClientVehicle* pVehicle, Vector& eyeOrigin
 
 	if (pVehicle != nullptr)
 	{
-		if (pVehicle->GetVehicleEnt() != nullptr)
+		C_BaseEntity* CurrentVehicle = pVehicle->GetVehicleEnt();
+		if (CurrentVehicle != nullptr)
 		{
 			Vector Velocity;
-			pVehicle->GetVehicleEnt()->EstimateAbsVelocity(Velocity);
+			CurrentVehicle->EstimateAbsVelocity(Velocity);
 
 			if (Velocity.Length() == 0)
 			{
@@ -684,6 +685,9 @@ void C_BaseHLPlayer::CalcVehicleView(IClientVehicle* pVehicle, Vector& eyeOrigin
 void C_BaseHLPlayer::CalcPlayerView(Vector& eyeOrigin, QAngle& eyeAngles, float& fov)
 {
 	BaseClass::CalcPlayerView(eyeOrigin, eyeAngles, fov);
+
+	if (GetMoveType() == MOVETYPE_NOCLIP)
+		return;
 
 	Vector Velocity;
 	EstimateAbsVelocity(Velocity);
@@ -754,9 +758,9 @@ void C_BaseHLPlayer::CalcViewBob(Vector& eyeOrigin)
 		Cycle = M_PI + M_PI * (Cycle - cl_hl1_bobup.GetFloat()) / (1.0 - cl_hl1_bobup.GetFloat());
 
 	EstimateAbsVelocity(Velocity);
-	Velocity[2] = 0;
+	Velocity.z = 0;
 
-	ViewBob = sqrt(Velocity[0] * Velocity[0] + Velocity[1] * Velocity[1]) * cl_hl1_bob.GetFloat();
+	ViewBob = sqrt(Velocity.x * Velocity.x + Velocity.y * Velocity.y) * cl_hl1_bob.GetFloat();
 	ViewBob = ViewBob * 0.3 + ViewBob * 0.7 * sin(Cycle);
 	ViewBob = min(ViewBob, 4);
 	ViewBob = max(ViewBob, -7);

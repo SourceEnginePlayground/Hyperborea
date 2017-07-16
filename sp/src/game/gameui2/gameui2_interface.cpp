@@ -236,7 +236,7 @@ CON_COMMAND(gameui2, "List of arguments: version, help")
 		else if (Q_stristr(args.Arg(1), "help"))
 		{
 			Msg("\nVisit ");
-			ConColorMsg(Color(0, 148, 255, 255), "https://github.com/NicolasDe/project-9");
+			ConColorMsg(Color(0, 148, 255, 255), "https://github.com/SourceEnginePlayground/Hyperborea");
 			Msg(" to get the latest version or report an issue\n");
 		}
 	}
