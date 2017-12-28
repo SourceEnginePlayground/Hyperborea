@@ -101,7 +101,7 @@ ITexture* DynamicRenderTargets::CreateDepthBufferTexture()
 	return CurrentMaterialSystem->CreateNamedRenderTargetTextureEx2(
 		"_rt_DepthBuffer",
 		GetViewport().x, GetViewport().y, RT_SIZE_FULL_FRAME_BUFFER,
-		IMAGE_FORMAT_RGBA32323232F,
+		IMAGE_FORMAT_R32F,
 		MATERIAL_RT_DEPTH_NONE,
 		Flags,
 		NULL);

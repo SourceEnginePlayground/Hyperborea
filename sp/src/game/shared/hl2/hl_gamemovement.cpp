@@ -285,9 +285,16 @@ bool CHL2GameMovement::OnLadder( trace_t &trace )
 {
 #if defined(HYPERBOREA)
 	if (GetLadder() == nullptr)
+	{
+		if (trace.plane.normal.z == 1.0f)
+			return false;
+		
 		return BaseClass::OnLadder(trace);
+	}
 	else
+	{
 		return true;
+	}
 #else
 	return ( GetLadder() != NULL ) ? true : false;
 #endif // HYPERBOREA

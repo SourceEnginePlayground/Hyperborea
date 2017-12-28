@@ -3307,6 +3307,10 @@ void CTriggerCamera::FollowTarget( )
 	SetNextThink( gpGlobals->curtime );
 
 	Move();
+
+#if defined(HYPERBOREA)
+	UpdateCameraAnimation();
+#endif // HYPERBOREA
 }
 
 void CTriggerCamera::Move()
