@@ -87,26 +87,20 @@ ITexture* DynamicRenderTargets::CreateMaskGameUITexture()
 		GetViewport().x, GetViewport().y, RT_SIZE_FULL_FRAME_BUFFER,
 		IMAGE_FORMAT_I8,
 		MATERIAL_RT_DEPTH_SHARED,
-		0,
+		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_NOMIP,
 		NULL);
 }
 #endif // GAMEUI2
 
 ITexture* DynamicRenderTargets::CreateDepthBufferTexture()
 {
-	uint32 Flags = 0;
-
-	ITexture* TF2DepthBufferTexture = CurrentMaterialSystem->FindTexture("_rt_ResolvedFullFrameDepth", TEXTURE_GROUP_RENDER_TARGET);
-	if (TF2DepthBufferTexture != nullptr)
-		Flags = TF2DepthBufferTexture->GetFlags();
-
 	return CurrentMaterialSystem->CreateNamedRenderTargetTextureEx2(
 		"_rt_DepthBuffer",
 		GetViewport().x, GetViewport().y, RT_SIZE_FULL_FRAME_BUFFER,
 		IMAGE_FORMAT_R32F,
-		MATERIAL_RT_DEPTH_NONE,
-		Flags,
-		NULL);
+		MATERIAL_RT_DEPTH_SEPARATE,
+		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_POINTSAMPLE,
+		CREATERENDERTARGETFLAGS_NOEDRAM);
 }
 
 ITexture* DynamicRenderTargets::CreateMaskViewmodelTexture()
@@ -116,7 +110,7 @@ ITexture* DynamicRenderTargets::CreateMaskViewmodelTexture()
 		GetViewport().x, GetViewport().y, RT_SIZE_FULL_FRAME_BUFFER,
 		IMAGE_FORMAT_I8,
 		MATERIAL_RT_DEPTH_SHARED,
-		0,
+		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_NOMIP,
 		NULL);
 }
 
