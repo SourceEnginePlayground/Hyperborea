@@ -10,7 +10,6 @@ work.  If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 #pragma once
 
 #include "vgui2d/panel2d.h"
-#include "vgui/ISurface.h"
 #include "mainmenu.h"
 
 class BasePanel : public Panel2D

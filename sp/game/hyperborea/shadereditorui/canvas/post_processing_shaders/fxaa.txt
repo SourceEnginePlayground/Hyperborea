@@ -47,7 +47,7 @@
 			{
 				"jackIn_00"
 				{
-					"iTarget_node"		"4"
+					"iTarget_node"		"2"
 					"iTarget_jack"		"0"
 				}
 				"jackIn_01"
@@ -71,46 +71,6 @@
 		}
 		"Node_002"
 		{
-			"iType"		"3"
-			"pos_x"		"-320.000000"
-			"pos_y"		"-130.000000"
-			"size_x"		"55.000000"
-			"size_y"		"-17.000000"
-			"iPreview"		"0"
-			"numTexcoords"		"1"
-			"numColor"		"0"
-			"numTexcoord_Flag_0"		"2"
-			"numTexcoord_Flag_1"		"2"
-			"numTexcoord_Flag_2"		"2"
-			"numTexcoord_Flag_3"		"2"
-			"numTexcoord_Flag_4"		"2"
-			"numTexcoord_Flag_5"		"2"
-			"numTexcoord_Flag_6"		"2"
-			"numTexcoord_Flag_7"		"2"
-			"numColor_Flag_0"		"8"
-			"numColor_Flag_1"		"8"
-		}
-		"Node_003"
-		{
-			"iType"		"4"
-			"pos_x"		"265.000000"
-			"pos_y"		"-130.000000"
-			"size_x"		"55.000000"
-			"size_y"		"-17.000000"
-			"iPreview"		"0"
-			"bridges"
-			{
-				"jackIn_00"
-				{
-					"iTarget_node"		"8"
-					"iTarget_jack"		"0"
-				}
-			}
-			"numColors"		"1"
-			"enable_Depth"		"0"
-		}
-		"Node_004"
-		{
 			"iType"		"27"
 			"pos_x"		"-44.526688"
 			"pos_y"		"206.208878"
@@ -127,11 +87,11 @@
 			}
 			"swizzleString"		"x y z 1"
 		}
-		"Node_005"
+		"Node_003"
 		{
 			"iType"		"94"
-			"pos_x"		"-235.637070"
-			"pos_y"		"-44.984234"
+			"pos_x"		"-333.317902"
+			"pos_y"		"-23.194881"
 			"size_x"		"84.000000"
 			"size_y"		"-50.000000"
 			"iPreview"		"1"
@@ -141,22 +101,62 @@
 			"szFallbackTexturePath"		"white"
 			"iFallbackMode"		"0"
 		}
-		"Node_006"
+		"Node_004"
+		{
+			"iType"		"3"
+			"pos_x"		"-333.730377"
+			"pos_y"		"-99.488052"
+			"size_x"		"55.000000"
+			"size_y"		"-17.000000"
+			"iPreview"		"0"
+			"numTexcoords"		"1"
+			"numColor"		"0"
+			"numTexcoord_Flag_0"		"2"
+			"numTexcoord_Flag_1"		"2"
+			"numTexcoord_Flag_2"		"2"
+			"numTexcoord_Flag_3"		"2"
+			"numTexcoord_Flag_4"		"2"
+			"numTexcoord_Flag_5"		"2"
+			"numTexcoord_Flag_6"		"2"
+			"numTexcoord_Flag_7"		"2"
+			"numColor_Flag_0"		"8"
+			"numColor_Flag_1"		"8"
+		}
+		"Node_005"
 		{
 			"iType"		"65"
-			"pos_x"		"-215.473480"
-			"pos_y"		"-208.660767"
+			"pos_x"		"-332.796478"
+			"pos_y"		"-142.184052"
 			"size_x"		"70.000000"
 			"size_y"		"-50.000000"
 			"iPreview"		"1"
 			"flSmartVal0"		"0.000000"
 		}
+		"Node_006"
+		{
+			"iType"		"4"
+			"pos_x"		"83.742104"
+			"pos_y"		"-25.135674"
+			"size_x"		"55.000000"
+			"size_y"		"-17.000000"
+			"iPreview"		"0"
+			"bridges"
+			{
+				"jackIn_00"
+				{
+					"iTarget_node"		"9"
+					"iTarget_jack"		"0"
+				}
+			}
+			"numColors"		"1"
+			"enable_Depth"		"0"
+		}
 		"Node_007"
 		{
-			"iType"		"99"
-			"pos_x"		"-7.805637"
-			"pos_y"		"-109.546219"
-			"size_x"		"133.000000"
+			"iType"		"19"
+			"pos_x"		"-221.653320"
+			"pos_y"		"-142.612274"
+			"size_x"		"91.000000"
 			"size_y"		"-80.000000"
 			"iPreview"		"1"
 			"bridges"
@@ -168,12 +168,46 @@
 				}
 				"jackIn_01"
 				{
-					"iTarget_node"		"2"
+					"iTarget_node"		"8"
+					"iTarget_jack"		"0"
+				}
+			}
+			"i_mat_rotation"		"0"
+		}
+		"Node_008"
+		{
+			"iType"		"5"
+			"pos_x"		"-333.117554"
+			"pos_y"		"-217.110596"
+			"size_x"		"50.000000"
+			"size_y"		"-50.000000"
+			"iPreview"		"1"
+			"szConstantString"		"1"
+		}
+		"Node_009"
+		{
+			"iType"		"99"
+			"szName"		"DoFXAA"
+			"pos_x"		"-85.371704"
+			"pos_y"		"-24.500664"
+			"size_x"		"133.000000"
+			"size_y"		"-80.000000"
+			"iPreview"		"1"
+			"bridges"
+			{
+				"jackIn_00"
+				{
+					"iTarget_node"		"3"
+					"iTarget_jack"		"0"
+				}
+				"jackIn_01"
+				{
+					"iTarget_node"		"4"
 					"iTarget_jack"		"0"
 				}
 				"jackIn_02"
 				{
-					"iTarget_node"		"6"
+					"iTarget_node"		"7"
 					"iTarget_jack"		"0"
 				}
 			}
@@ -188,35 +222,11 @@
 			"szFunctionName"		"DoFXAA"
 			"iInline"		"1"
 			"szcode_global_num_strings"		"1"
-			"szcode_global_partial_00"		"#define FXAA_PC 1\r\n#define FXAA_HLSL_3 1\r\n#define FXAA_GREEN_AS_LUMA 1\r\n#define FXAA_DISCARD 1\r\n#define FXAA_QUALITY__PRESET 39\r\n\r\n#include \'fxaa3_11.h\'\n"
+			"szcode_global_partial_00"		"#define FXAA_PC 1\r\n#define FXAA_HLSL_3 1\r\n#define FXAA_GREEN_AS_LUMA 1\r\n#define FXAA_DISCARD 1\r\n#define FXAA_FAST_PIXEL_OFFSET 1\r\n\r\n#include \'fxaa3_11.h\'\n"
 			"szcode_body_num_strings"		"2"
-			"szcode_body_partial_00"		"	col = FxaaPixelShader( uv,\r\n		(float4)0,\r\n		tex,\r\n		tex,\r\n		tex,\r\n		texelsize,\r\n		(float4)0,\r\n		(float4)0,\r\n		(float4)0,\r\n			// fxaaQualitySubpix\r\n			// This used to be the FXAA_QUALITY__SUBPIX define.\r\n			// It is here now to allow easier tuning.\r\n			// Choose the amount of sub-pixel aliasing removal.\r\n			// This can effect sharpness.\r\n			//   1.00 - upper limit (softer)\r\n			//   0.75 - default amount of filtering\r\n			//   0.50 - lower limit (sharper, less sub-pixel aliasing removal)\r\n			//   0.25 - almost off\r\n			//   0.00 - completely off\r\n		1.0,\r\n			// This used to be the FXAA_QUALITY__EDGE_THRESHOLD define.\r\n			// It is here now to allow easier tuning.\r\n			// The minimum amount of local contrast required to apply algorithm.\r\n			//   0.333 - too little (faster)\r\n			//   0.250 - low quality\r\n			//   0.166 - default\r\n			//   0.125 - high quality \r\n			//   0.063 - overkill (slower)\r\n			// fxaaQualityEdgeThreshold\r\n		0.125,\r\n			// This used to be t"
-			"szcode_body_partial_01"		"he FXAA_QUALITY__EDGE_THRESHOLD_MIN define.\r\n			// It is here now to allow easier tuning.\r\n			// Trims the algorithm from processing darks.\r\n			//   0.0833 - upper limit (default, the start of visible unfiltered edges)\r\n			//   0.0625 - high quality (faster)\r\n			//   0.0312 - visible limit (slower)\r\n			// Special notes when using FXAA_GREEN_AS_LUMA,\r\n			//   Likely want to set this to zero.\r\n			//   As colors that are mostly not-green\r\n			//   will appear very dark in the green channel!\r\n			//   Tune by looking at mostly non-green content,\r\n			//   then start at zero and increase until aliasing is a problem.\r\n		0.0312,\r\n		0, 0, 0, (float4)0 );"
+			"szcode_body_partial_00"		"	col = FxaaPixelShader( uv,\r\n		(float4)0,\r\n		tex, // PC\r\n		tex,\r\n		tex,\r\n		texelsize,\r\n		(float4)0,\r\n		(float4)0,\r\n		(float4)0,\r\n			// fxaaQualitySubpix\r\n			// This used to be the FXAA_QUALITY__SUBPIX define.\r\n			// It is here now to allow easier tuning.\r\n			// Choose the amount of sub-pixel aliasing removal.\r\n			// This can effect sharpness.\r\n			//   1.00 - upper limit (softer)\r\n			//   0.75 - default amount of filtering\r\n			//   0.50 - lower limit (sharper, less sub-pixel aliasing removal)\r\n			//   0.25 - almost off\r\n			//   0.00 - completely off\r\n		1.00,\r\n			// This used to be the FXAA_QUALITY__EDGE_THRESHOLD define.\r\n			// It is here now to allow easier tuning.\r\n			// The minimum amount of local contrast required to apply algorithm.\r\n			//   0.333 - too little (faster)\r\n			//   0.250 - low quality\r\n			//   0.166 - default\r\n			//   0.125 - high quality \r\n			//   0.063 - overkill (slower)\r\n			// fxaaQualityEdgeThreshold\r\n		0.333,\r\n			// This used "
+			"szcode_body_partial_01"		"to be the FXAA_QUALITY__EDGE_THRESHOLD_MIN define.\r\n			// It is here now to allow easier tuning.\r\n			// Trims the algorithm from processing darks.\r\n			//   0.0833 - upper limit (default, the start of visible unfiltered edges)\r\n			//   0.0625 - high quality (faster)\r\n			//   0.0312 - visible limit (slower)\r\n			// Special notes when using FXAA_GREEN_AS_LUMA,\r\n			//   Likely want to set this to zero.\r\n			//   As colors that are mostly not-green\r\n			//   will appear very dark in the green channel!\r\n			//   Tune by looking at mostly non-green content,\r\n			//   then start at zero and increase until aliasing is a problem.\r\n		0.0,\r\n		0, 0, 0, (float4)0 );"
 			"iEnvFlags"		"0"
-		}
-		"Node_008"
-		{
-			"iType"		"29"
-			"pos_x"		"-68.402390"
-			"pos_y"		"52.832035"
-			"size_x"		"122.000000"
-			"size_y"		"-80.000000"
-			"iPreview"		"1"
-			"bridges"
-			{
-				"jackIn_00"
-				{
-					"iTarget_node"		"2"
-					"iTarget_jack"		"0"
-				}
-			}
-			"iSRGB"		"0"
-			"iTextureType"		"5"
-			"IsCubemap"		"0"
-			"iLookupoverride"		"0"
-			"szDemoTexturePath"		"_rt_FullFrameFB"
-			"szFallbackTexturePath"		"white"
-			"iFallbackMode"		"0"
 		}
 	}
 }

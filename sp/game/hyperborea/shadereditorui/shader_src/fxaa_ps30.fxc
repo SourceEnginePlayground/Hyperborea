@@ -24,7 +24,7 @@ const float2 _g_TexelSize		: register( c16 );
 #define FXAA_HLSL_3 1
 #define FXAA_GREEN_AS_LUMA 1
 #define FXAA_DISCARD 1
-#define FXAA_QUALITY__PRESET 39
+#define FXAA_FAST_PIXEL_OFFSET 1
 
 #include "fxaa3_11.h"
 
@@ -33,7 +33,7 @@ void DoFXAA( in sampler tex, in float2 uv, in float2 texelsize, out float4 col )
 {
 	col = FxaaPixelShader( uv,
 		(float4)0,
-		tex,
+		tex, // PC
 		tex,
 		tex,
 		texelsize,
@@ -50,7 +50,7 @@ void DoFXAA( in sampler tex, in float2 uv, in float2 texelsize, out float4 col )
 			//   0.50 - lower limit (sharper, less sub-pixel aliasing removal)
 			//   0.25 - almost off
 			//   0.00 - completely off
-		1.0,
+		1.00,
 			// This used to be the FXAA_QUALITY__EDGE_THRESHOLD define.
 			// It is here now to allow easier tuning.
 			// The minimum amount of local contrast required to apply algorithm.
@@ -60,7 +60,7 @@ void DoFXAA( in sampler tex, in float2 uv, in float2 texelsize, out float4 col )
 			//   0.125 - high quality 
 			//   0.063 - overkill (slower)
 			// fxaaQualityEdgeThreshold
-		0.125,
+		0.333,
 			// This used to be the FXAA_QUALITY__EDGE_THRESHOLD_MIN define.
 			// It is here now to allow easier tuning.
 			// Trims the algorithm from processing darks.
@@ -73,7 +73,7 @@ void DoFXAA( in sampler tex, in float2 uv, in float2 texelsize, out float4 col )
 			//   will appear very dark in the green channel!
 			//   Tune by looking at mostly non-green content,
 			//   then start at zero and increase until aliasing is a problem.
-		0.0312,
+		0.0,
 		0, 0, 0, (float4)0 );
 }
 
@@ -92,9 +92,9 @@ struct PS_OUTPUT
 PS_OUTPUT main( const PS_INPUT In )
 {
 	PS_OUTPUT Out;
-	float4 _var0 = (float4)0;
-	DoFXAA( _Sampler_00, In.vTexCoord_0, _g_TexelSize, _var0 );
-	float4 _var1 = tex2D( _Sampler_00, In.vTexCoord_0 ).rgba;
-	Out.vColor_0 = _var0;
+	float2 _var0 = _g_TexelSize * float( 1.000000 );
+	float4 _var1 = (float4)0;
+	DoFXAA( _Sampler_00, In.vTexCoord_0, _var0, _var1 );
+	Out.vColor_0 = _var1;
 	return Out;
 }
