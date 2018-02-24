@@ -1107,9 +1107,9 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
 #if !defined(HYPERBOREA)
 		CUtlVector< IClientRenderable * > opaqueViewModelList( 32 );
 		CUtlVector< IClientRenderable * > translucentViewModelList( 32 );
-#endif // HYPERBOREA
 
-		ClientLeafSystem()->CollateViewModelRenderables( opaqueViewModelList, translucentViewModelList );
+		ClientLeafSystem()->CollateViewModelRenderables(opaqueViewModelList, translucentViewModelList);
+#endif // HYPERBOREA
 
 		if ( ToolsEnabled() && ( !bShouldDrawPlayerViewModel || !bShouldDrawToolViewModels ) )
 		{
