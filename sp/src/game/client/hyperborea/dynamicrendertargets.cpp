@@ -85,10 +85,10 @@ ITexture* DynamicRenderTargets::CreateMaskGameUITexture()
 	return CurrentMaterialSystem->CreateNamedRenderTargetTextureEx2(
 		"_rt_MaskGameUI",
 		GetViewport().x, GetViewport().y, RT_SIZE_FULL_FRAME_BUFFER,
-		CurrentMaterialSystem->GetBackBufferFormat(),
-		MATERIAL_RT_DEPTH_SHARED,
+		IMAGE_FORMAT_I8,
+		MATERIAL_RT_DEPTH_NONE,
 		0,
-		CREATERENDERTARGETFLAGS_HDR);
+		NULL);
 }
 #endif // GAMEUI2
 
@@ -114,10 +114,10 @@ ITexture* DynamicRenderTargets::CreateMaskViewmodelTexture()
 	return CurrentMaterialSystem->CreateNamedRenderTargetTextureEx2(
 		"_rt_MaskViewmodel",
 		GetViewport().x, GetViewport().y, RT_SIZE_FULL_FRAME_BUFFER,
-		CurrentMaterialSystem->GetBackBufferFormat(),
+		IMAGE_FORMAT_I8,
 		MATERIAL_RT_DEPTH_SHARED,
 		0,
-		CREATERENDERTARGETFLAGS_HDR);
+		NULL);
 }
 
 static DynamicRenderTargets StaticDynamicRenderTargets;

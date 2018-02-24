@@ -1198,6 +1198,21 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
 			pRenderContext->ClearColor3ub(0, 0, 0);
 		}
 	}
+	else
+	{
+		// Draw viewmodel mask
+		ITexture* MaskViewmodelTexture = materials->FindTexture("_rt_MaskViewmodel", TEXTURE_GROUP_RENDER_TARGET);
+		if (MaskViewmodelTexture != nullptr)
+		{
+			pRenderContext->ClearColor3ub(255, 255, 255);
+			render->Push2DView(viewModelSetup, VIEW_CLEAR_DEPTH | VIEW_CLEAR_COLOR, MaskViewmodelTexture, GetFrustum());
+
+			// Just updating the texture if viewmodel has been disabled?
+
+			render->PopView(GetFrustum());
+			pRenderContext->ClearColor3ub(0, 0, 0);
+		}
+	}
 #endif // HYPERBOREA
 
 	// Restore the matrices
