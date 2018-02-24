@@ -29,6 +29,7 @@ void DynamicRenderTargets::InitDynamicRenderTargets()
 	MaskGameUITexture.Init(CreateMaskGameUITexture());
 #endif // GAMEUI2
 	DepthBufferTexture.Init(CreateDepthBufferTexture());
+	MaskViewmodelTexture.Init(CreateMaskViewmodelTexture());
 }
 
 void DynamicRenderTargets::ShutdownClientRenderTargets()
@@ -46,6 +47,7 @@ void DynamicRenderTargets::ShutdownDynamicRenderTargets()
 	MaskGameUITexture.Shutdown();
 #endif // GAMEUI2
 	DepthBufferTexture.Shutdown();
+	MaskViewmodelTexture.Shutdown();
 }
 
 void DynamicRenderTargets::PreRender()
@@ -105,6 +107,17 @@ ITexture* DynamicRenderTargets::CreateDepthBufferTexture()
 		MATERIAL_RT_DEPTH_NONE,
 		Flags,
 		NULL);
+}
+
+ITexture* DynamicRenderTargets::CreateMaskViewmodelTexture()
+{
+	return CurrentMaterialSystem->CreateNamedRenderTargetTextureEx2(
+		"_rt_MaskViewmodel",
+		GetViewport().x, GetViewport().y, RT_SIZE_FULL_FRAME_BUFFER,
+		CurrentMaterialSystem->GetBackBufferFormat(),
+		MATERIAL_RT_DEPTH_SHARED,
+		0,
+		CREATERENDERTARGETFLAGS_HDR);
 }
 
 static DynamicRenderTargets StaticDynamicRenderTargets;

@@ -1095,12 +1095,19 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
 	// Force clipped down range
 	if( bUseDepthHack )
 		pRenderContext->DepthRange( 0.0f, 0.1f );
+
+#if defined(HYPERBOREA)
+	CUtlVector<IClientRenderable*> opaqueViewModelList(32);
+	CUtlVector<IClientRenderable*> translucentViewModelList(32);
+	ClientLeafSystem()->CollateViewModelRenderables(opaqueViewModelList, translucentViewModelList);
+#endif // HYPERBOREA
 	
 	if ( bShouldDrawPlayerViewModel || bShouldDrawToolViewModels )
 	{
-
+#if !defined(HYPERBOREA)
 		CUtlVector< IClientRenderable * > opaqueViewModelList( 32 );
 		CUtlVector< IClientRenderable * > translucentViewModelList( 32 );
+#endif // HYPERBOREA
 
 		ClientLeafSystem()->CollateViewModelRenderables( opaqueViewModelList, translucentViewModelList );
 
@@ -1135,7 +1142,9 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
 		}
 
 		DrawRenderablesInList( opaqueViewModelList );
+#if !defined(HYPERBOREA)
 		DrawRenderablesInList( translucentViewModelList, STUDIO_TRANSPARENCY );
+#endif // HYPERBOREA
 	}
 
 	// Reset the depth range to the original values
@@ -1143,6 +1152,53 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
 		pRenderContext->DepthRange( depthmin, depthmax );
 
 	render->PopView( GetFrustum() );
+
+#if defined(HYPERBOREA)
+	if (bShouldDrawPlayerViewModel || bShouldDrawToolViewModels)
+	{
+		// Draw all translucent viewmodels with correct FOV
+		viewModelSetup.fov = view.fov;
+		render->Push3DView(viewModelSetup, 0, pRTColor, GetFrustum(), pRTDepth);
+
+		if (bUseDepthHack)
+			pRenderContext->DepthRange(0.0f, 0.1f);
+
+		DrawRenderablesInList(translucentViewModelList, STUDIO_TRANSPARENCY);
+
+		if (bUseDepthHack)
+			pRenderContext->DepthRange(depthmin, depthmax);
+
+		render->PopView(GetFrustum());
+
+		// Draw viewmodel mask
+		ITexture* MaskViewmodelTexture = materials->FindTexture("_rt_MaskViewmodel", TEXTURE_GROUP_RENDER_TARGET);
+		if (MaskViewmodelTexture != nullptr)
+		{
+			viewModelSetup.fov = view.fovViewmodel;
+			pRenderContext->ClearColor3ub(255, 255, 255);
+			render->Push3DView(viewModelSetup, VIEW_CLEAR_DEPTH | VIEW_CLEAR_COLOR, MaskViewmodelTexture, GetFrustum());
+
+			if (bUseDepthHack)
+				pRenderContext->DepthRange(0.0f, 0.1f);
+
+			IMaterial* BlackMaterial = materials->FindMaterial("vgui/black", TEXTURE_GROUP_OTHER, true); // "tools/toolsblack"
+			if (BlackMaterial != nullptr &&
+				BlackMaterial->IsErrorMaterial() == false)
+			{
+				BlackMaterial->IncrementReferenceCount();
+				modelrender->ForcedMaterialOverride(BlackMaterial);
+				DrawRenderablesInList(opaqueViewModelList);
+				modelrender->ForcedMaterialOverride(nullptr);
+			}
+
+			if (bUseDepthHack)
+				pRenderContext->DepthRange(depthmin, depthmax);
+
+			render->PopView(GetFrustum());
+			pRenderContext->ClearColor3ub(0, 0, 0);
+		}
+	}
+#endif // HYPERBOREA
 
 	// Restore the matrices
 	pRenderContext->MatrixMode( MATERIAL_PROJECTION );

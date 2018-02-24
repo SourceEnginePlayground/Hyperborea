@@ -36,6 +36,7 @@ protected:
 	virtual ITexture* CreateMaskGameUITexture();
 #endif // GAMEUI2
 	virtual ITexture* CreateDepthBufferTexture();
+	virtual ITexture* CreateMaskViewmodelTexture();
 
 private:
 	Vector2D OldViewport;
@@ -44,6 +45,7 @@ private:
 	CTextureReference MaskGameUITexture;
 #endif // GAMEUI2
 	CTextureReference DepthBufferTexture;
+	CTextureReference MaskViewmodelTexture;
 
 	IMaterialSystem* CurrentMaterialSystem;
 };
