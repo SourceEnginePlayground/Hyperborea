@@ -86,7 +86,7 @@ ITexture* DynamicRenderTargets::CreateMaskGameUITexture()
 		"_rt_MaskGameUI",
 		GetViewport().x, GetViewport().y, RT_SIZE_FULL_FRAME_BUFFER,
 		IMAGE_FORMAT_I8,
-		MATERIAL_RT_DEPTH_NONE,
+		MATERIAL_RT_DEPTH_SHARED,
 		0,
 		NULL);
 }
