@@ -134,6 +134,12 @@ $Project "Client (Hyperborea)"
 				$File	"hyperborea\dynamicrendertargets.cpp"
 				$File	"hyperborea\dynamicrendertargets.h"
 			}
+
+			$Folder	"Weapons"
+			{
+				$File	"hyperborea\c_weapon_physgun.cpp"
+				$File	"hyperborea\c_weapon_physgun.h"
+			}
 		}
 
 		$Folder "Shader Editor" [$WIN32]

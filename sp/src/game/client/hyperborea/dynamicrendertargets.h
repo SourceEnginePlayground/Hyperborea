@@ -36,6 +36,7 @@ protected:
 	virtual ITexture* CreateMaskGameUITexture();
 #endif // GAMEUI2
 	virtual ITexture* CreateDepthBufferTexture();
+	virtual ITexture* CreatePhysgunBeamTexture();
 	virtual ITexture* CreateMaskViewmodelTexture();
 
 private:
@@ -45,6 +46,7 @@ private:
 	CTextureReference MaskGameUITexture;
 #endif // GAMEUI2
 	CTextureReference DepthBufferTexture;
+	CTextureReference PhysgunBeamTexture;
 	CTextureReference MaskViewmodelTexture;
 
 	IMaterialSystem* CurrentMaterialSystem;

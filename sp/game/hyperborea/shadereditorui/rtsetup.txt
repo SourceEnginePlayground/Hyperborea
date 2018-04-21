@@ -26,7 +26,27 @@
 		"rt_imgformat"		"2"
 		"rt_sizemode"		"4"
 		"rt_depthmode"		"2"
-		"rt_flags"		"32780"
+		"rt_flags"		"33036"
+		"rt_size_x"		"256"
+		"rt_size_y"		"256"
+	}
+	"rt_03"
+	{
+		"rt_name"		"_rt_PhysgunBeamGlow"
+		"rt_imgformat"		"0"
+		"rt_sizemode"		"4"
+		"rt_depthmode"		"2"
+		"rt_flags"		"33036"
+		"rt_size_x"		"256"
+		"rt_size_y"		"256"
+	}
+	"rt_04"
+	{
+		"rt_name"		"_rt_PhysgunBeamPreGlow"
+		"rt_imgformat"		"0"
+		"rt_sizemode"		"4"
+		"rt_depthmode"		"2"
+		"rt_flags"		"33036"
 		"rt_size_x"		"256"
 		"rt_size_y"		"256"
 	}

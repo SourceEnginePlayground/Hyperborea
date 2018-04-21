@@ -1,0 +1,64 @@
+"physgun_beam_blend"
+{
+	"vs_name"		"physgun_beam_blend_vs30"
+	"ps_name"		"physgun_beam_blend_ps30"
+	"shader_filename"		"shadereditorui\canvas\post_processing_shaders\physgun_beam_blend.txt"
+	"dump_version"		"dumpver#001"
+	"i_sm"		"1"
+	"i_cull"		"0"
+	"i_ablend"		"0"
+	"fl_atestref"		"0.500000"
+	"i_dtest"		"0"
+	"i_dwrite"		"0"
+	"i_srgbw"		"0"
+	"i_vfmt_flags"		"262401"
+	"i_vfmt_texcoords"		"1"
+	"i_vfmt_udata"		"0"
+	"i_vfmt_texcoordDim_0"		"2"
+	"i_vfmt_texcoordDim_1"		"2"
+	"i_vfmt_texcoordDim_2"		"2"
+	"i_vlit"		"0"
+	"i_vrefract"		"1"
+	"identifiers_VS"
+	{
+		"i_numdcombos"		"1"
+	}
+	"identifiers_PS"
+	{
+		"texsamp_0"
+		{
+			"sz_fallback"		"white"
+			"i_sampidx"		"0"
+			"i_texmode"		"5"
+			"i_cubemap"		"0"
+			"i_srgb"		"0"
+		}
+		"texsamp_1"
+		{
+			"sz_fallback"		"_rt_PhysgunBeamGlow"
+			"i_sampidx"		"1"
+			"i_texmode"		"1"
+			"i_cubemap"		"0"
+			"i_srgb"		"0"
+		}
+		"texsamp_2"
+		{
+			"sz_param"		"_rt_PhysgunBeamPreGlow"
+			"sz_fallback"		"_rt_PhysgunBeamPreGlow"
+			"i_sampidx"		"2"
+			"i_texmode"		"0"
+			"i_cubemap"		"0"
+			"i_srgb"		"0"
+		}
+		"texsamp_3"
+		{
+			"sz_param"		"Test3"
+			"sz_fallback"		"_rt_MaskViewmodel"
+			"i_sampidx"		"3"
+			"i_texmode"		"0"
+			"i_cubemap"		"0"
+			"i_srgb"		"0"
+		}
+		"i_numdcombos"		"1"
+	}
+}

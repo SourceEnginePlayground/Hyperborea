@@ -299,5 +299,13 @@ $Project "Server (Hyperborea)"
 				$File	"hl2\weapon_flaregun.h"
 			}
 		}
+
+		$Folder	"Hyperborea"
+		{
+			$Folder	"Weapons"
+			{
+				$File	"hyperborea\weapon_physgun.cpp"
+			}
+		}
 	}
 }

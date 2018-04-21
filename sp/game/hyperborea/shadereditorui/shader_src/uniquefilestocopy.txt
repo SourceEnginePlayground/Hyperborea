@@ -12,6 +12,5 @@ common_flashlight_fxc.h
 common_parallax.h
 d:\steam\steamapps\common\source sdk base 2013 singleplayer\bin\\shadercompile.exe
 d:\steam\steamapps\common\source sdk base 2013 singleplayer\bin\\shadercompile_dll.dll
-fxaa3_11.h
-fxaa_vs30.fxc
-fxaa_ps30.fxc
+physgun_beam_blend_vs30.fxc
+physgun_beam_blend_ps30.fxc

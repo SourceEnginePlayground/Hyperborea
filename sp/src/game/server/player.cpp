@@ -6165,6 +6165,11 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 #ifdef HL2_EPISODIC
 		// GiveNamedItem( "weapon_magnade" );
 #endif
+
+#if defined(HYPERBOREA)
+		GiveNamedItem("weapon_physgun");
+#endif // HYPERBOREA
+
 		if ( GetHealth() < 100 )
 		{
 			TakeHealth( 25, DMG_GENERIC );

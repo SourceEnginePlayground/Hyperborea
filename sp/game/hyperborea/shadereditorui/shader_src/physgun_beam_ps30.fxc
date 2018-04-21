@@ -1,0 +1,96 @@
+// ********************************
+// ** auto generated pixelshader **
+// ********************************
+
+#define SHADER_EDITOR_2013_COMPILE
+
+
+// Includes
+#include "common_ps_fxc.h"
+#include "common_vertexlitgeneric_dx9.h"
+#include "common_lightmappedgeneric_fxc.h"
+#include "common_flashlight_fxc.h"
+#include "common_parallax.h"
+
+
+// Samplers
+sampler _Sampler_00		: register( s0 );
+sampler _Sampler_01		: register( s1 );
+sampler _Sampler_02		: register( s2 );
+sampler _Sampler_03		: register( s3 );
+sampler _Sampler_04		: register( s4 );
+sampler _Sampler_05		: register( s5 );
+sampler _Sampler_06		: register( s6 );
+
+// Constants
+const float _g_Time		: register( c16 );
+
+// Semantic structures
+struct PS_INPUT
+{
+	float2 vTexCoord_0			:	TEXCOORD0;
+};
+
+struct PS_OUTPUT
+{
+	float4 vColor_0				:	COLOR0;
+};
+
+// Entry point
+PS_OUTPUT main( const PS_INPUT In )
+{
+	PS_OUTPUT Out;
+	float _var0 = _g_Time * float( 0.050000 );
+	float2 _var1 = In.vTexCoord_0 * float( 1.000000 );
+	float2 _var2 = In.vTexCoord_0 + _var0;
+	float2 _var3 = In.vTexCoord_0 - _var0;
+	float2 _var4 = _var2 * float( 0.250000 );
+	float2 _var5 = _var2 * float( 3.500000 );
+	_var3 = _var3 * float( 0.150000 );
+	float2 _var6 = float( 0.100000 ) * _var2;
+	float4 _texLookup_40 = tex2D( _Sampler_00, _var4 );
+	float _var7 = _texLookup_40.r;
+	float _var8 = _texLookup_40.g;
+	float4 _texLookup_42 = tex2D( _Sampler_01, _var5 );
+	float _var9 = _texLookup_42.r;
+	float _var10 = _texLookup_42.g;
+	float4 _texLookup_44 = tex2D( _Sampler_02, _var3 );
+	float _var11 = _texLookup_44.r;
+	float _var12 = _texLookup_44.g;
+	float _var13 = tex2D( _Sampler_03, _var6 ).r;
+	float2 _var14 = float2( _var7, _var8 );
+	float2 _var15 = float2( _var9, _var10 );
+	float2 _var16 = float2( _var11, _var8 );
+	float2 _var17 = float2( _var13, _var12 );
+	_var14 = lerp( In.vTexCoord_0, _var14, float( 0.004000 ) );
+	float2 _var18 = lerp( In.vTexCoord_0, _var15, float( 0.005000 ) );
+	_var16 = lerp( In.vTexCoord_0, _var16, float( 0.025000 ) );
+	_var17 = lerp( In.vTexCoord_0, _var17, float( 0.030000 ) );
+	float2 _var19 = lerp( In.vTexCoord_0, _var15, float( 0.005500 ) );
+	float3 _var20 = tex2D( _Sampler_04, _var14 ).rgb;
+	float _var21 = tex2D( _Sampler_05, _var18 ).r;
+	float _var22 = tex2D( _Sampler_06, _var16 ).r;
+	float _var23 = tex2D( _Sampler_06, _var17 ).r;
+	float _var24 = tex2D( _Sampler_04, _var19 ).r;
+	float3 _var25 = lerp( float3( 0.000000, 0.000000, 0.000000 ), float3( 1.000000, 0.240000, 0.000000 ), _var20 );
+	float3 _var26 = smoothstep( float( 0.450000 ), float( 1.000000 ), _var20 );
+	_var21 = smoothstep( float( 0.500000 ), float( 1.500000 ), _var21 );
+	float3 _var27 = lerp( float3( 0.000000, 0.000000, 0.000000 ), float3( 0.220000, 0.321400, 1.000000 ), _var22 );
+	float _var28 = smoothstep( float( 0.200000 ), float( 1.000000 ), _var22 );
+	float3 _var29 = lerp( float3( 0.000000, 0.000000, 0.000000 ), float3( 0.136500, 0.673140, 0.975000 ), _var23 );
+	_var24 = smoothstep( float( 0.500000 ), float( 1.850000 ), _var24 );
+	_var26 = lerp( float3( 0.000000, 0.000000, 0.000000 ), float3( 1.000000, 1.000000, 1.000000 ), _var26 );
+	float3 _var30 = lerp( float3( 0.000000, 0.000000, 0.000000 ), float3( 0.100000, 0.646000, 0.700000 ), _var21 );
+	float3 _var31 = max( _var27, _var28 );
+	_var29 = smoothstep( float( 0.500000 ), float( 0.900000 ), _var29 );
+	float3 _var32 = lerp( float3( 0.000000, 0.000000, 0.000000 ), float3( 0.000000, 0.340000, 1.000000 ), _var24 );
+	_var25 = _var25 + _var26;
+	_var31 = lerp( _var27, _var31, float( 0.750000 ) );
+	_var25 = _var25 + _var30;
+	_var25 = _var25 + _var31;
+	_var25 = _var25 + _var29;
+	_var25 = _var25 + _var32;
+	float4 _var33 = float4( _var25, float( 1.000000 ) );
+	Out.vColor_0 = _var33;
+	return Out;
+}

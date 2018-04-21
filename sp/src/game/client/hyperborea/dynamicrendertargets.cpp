@@ -29,6 +29,7 @@ void DynamicRenderTargets::InitDynamicRenderTargets()
 	MaskGameUITexture.Init(CreateMaskGameUITexture());
 #endif // GAMEUI2
 	DepthBufferTexture.Init(CreateDepthBufferTexture());
+	PhysgunBeamTexture.Init(CreatePhysgunBeamTexture());
 	MaskViewmodelTexture.Init(CreateMaskViewmodelTexture());
 }
 
@@ -47,6 +48,7 @@ void DynamicRenderTargets::ShutdownDynamicRenderTargets()
 	MaskGameUITexture.Shutdown();
 #endif // GAMEUI2
 	DepthBufferTexture.Shutdown();
+	PhysgunBeamTexture.Shutdown();
 	MaskViewmodelTexture.Shutdown();
 }
 
@@ -101,6 +103,17 @@ ITexture* DynamicRenderTargets::CreateDepthBufferTexture()
 		MATERIAL_RT_DEPTH_SEPARATE,
 		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_POINTSAMPLE,
 		CREATERENDERTARGETFLAGS_NOEDRAM);
+}
+
+ITexture* DynamicRenderTargets::CreatePhysgunBeamTexture()
+{
+	return CurrentMaterialSystem->CreateNamedRenderTargetTextureEx2(
+		"_rt_PhysgunBeam",
+		GetViewport().x, GetViewport().y, RT_SIZE_FULL_FRAME_BUFFER,
+		IMAGE_FORMAT_I8,
+		MATERIAL_RT_DEPTH_SHARED,
+		TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT | TEXTUREFLAGS_NOMIP,
+		NULL);
 }
 
 ITexture* DynamicRenderTargets::CreateMaskViewmodelTexture()

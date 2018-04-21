@@ -20,7 +20,7 @@ sampler _Sampler_00		: register( s0 );
 const float2 _g_TexelSize		: register( c16 );
 
 // Arrays
-static const float g_cArray_83[13] =
+static const float g_cArray_564[13] =
 {
 	float( 0.083920f ),
 	float( 0.342450f ),
@@ -63,7 +63,7 @@ PS_OUTPUT main( const PS_INPUT In )
 		float4 _texLookup_16 = tex2D( _Sampler_00, _var1 );
 		float4 _var5 = _texLookup_16.rgba;
 		float _var6 = _texLookup_16.a;
-		_var5 = _var5 * g_cArray_83[_var4];
+		_var5 = _var5 * g_cArray_564[_var4];
 		_var6 = ceil( _var6 );
 		_var0 = _var0 + _var5;
 		_var3 = _var3 + _var6;

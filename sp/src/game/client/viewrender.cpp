@@ -83,6 +83,7 @@
 
 #if defined(HYPERBOREA)
 #include "ShaderEditor/ShaderEditorSystem.h"
+#include "c_weapon_physgun.h"
 #endif // HYPERBOREA
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -1154,8 +1155,25 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
 	render->PopView( GetFrustum() );
 
 #if defined(HYPERBOREA)
+	CUtlVector<IClientRenderable*> translucentViewModelListWithPhysgunBeam(32);
+	CUtlVector<IClientRenderable*> translucentViewModelListWithoutPhysgunBeam(32);
+
 	if (bShouldDrawPlayerViewModel || bShouldDrawToolViewModels)
 	{
+		// Sort viewmodel effects
+		for (int i = translucentViewModelList.Count() - 1; i >= 0; --i)
+		{
+			C_BeamQuadratic* BeamQuadratic = dynamic_cast<C_BeamQuadratic*>(translucentViewModelList[i]);
+			if (BeamQuadratic != nullptr)
+			{
+				translucentViewModelListWithPhysgunBeam.AddToTail(translucentViewModelList[i]);
+			}
+			else
+			{
+				translucentViewModelListWithoutPhysgunBeam.AddToTail(translucentViewModelList[i]);
+			}
+		}
+		
 		// Draw all translucent viewmodels with correct FOV
 		viewModelSetup.fov = view.fov;
 		render->Push3DView(viewModelSetup, 0, pRTColor, GetFrustum(), pRTDepth);
@@ -1163,12 +1181,31 @@ void CViewRender::DrawViewModels( const CViewSetup &view, bool drawViewmodel )
 		if (bUseDepthHack)
 			pRenderContext->DepthRange(0.0f, 0.1f);
 
-		DrawRenderablesInList(translucentViewModelList, STUDIO_TRANSPARENCY);
+		DrawRenderablesInList(translucentViewModelListWithoutPhysgunBeam, STUDIO_TRANSPARENCY);
 
 		if (bUseDepthHack)
 			pRenderContext->DepthRange(depthmin, depthmax);
 
 		render->PopView(GetFrustum());
+
+		// Draw physgun beam mask
+		ITexture* PhysgunBeamTexture = materials->FindTexture("_rt_PhysgunBeam", TEXTURE_GROUP_RENDER_TARGET);
+		if (PhysgunBeamTexture != nullptr)
+		{
+			pRenderContext->ClearColor3ub(0, 0, 0);
+			render->Push3DView(viewModelSetup, VIEW_CLEAR_DEPTH | VIEW_CLEAR_COLOR, PhysgunBeamTexture, GetFrustum());
+
+			if (bUseDepthHack)
+				pRenderContext->DepthRange(0.0f, 0.1f);
+
+			DrawRenderablesInList(translucentViewModelListWithPhysgunBeam, STUDIO_TRANSPARENCY);
+
+			if (bUseDepthHack)
+				pRenderContext->DepthRange(depthmin, depthmax);
+
+			render->PopView(GetFrustum());
+			pRenderContext->ClearColor3ub(0, 0, 0);
+		}
 
 		// Draw viewmodel mask
 		ITexture* MaskViewmodelTexture = materials->FindTexture("_rt_MaskViewmodel", TEXTURE_GROUP_RENDER_TARGET);
@@ -5589,7 +5626,7 @@ void CBaseWorldView::DepthBuffer()
 		return;
 
 	CMatRenderContextPtr RenderContext(materials);
-	RenderContext->ClearColor4ub(255, 255, 255, 255);
+	RenderContext->ClearColor4ub(0, 0, 0, 255);
 	RenderContext.SafeRelease();
 
 	render->Push3DView((*this), VIEW_CLEAR_DEPTH | VIEW_CLEAR_COLOR, DepthBufferTexture, GetFrustum());
@@ -5610,8 +5647,8 @@ void CBaseWorldView::DepthBuffer()
 	VPROF_BUDGET("DrawOpaqueRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING);
 	DrawOpaqueRenderables(DEPTH_MODE_SSA0);
 
-	VPROF_BUDGET("DrawTranslucentRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING);
-	DrawTranslucentRenderables(false, true);
+//	VPROF_BUDGET("DrawTranslucentRenderables", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING);
+//	DrawTranslucentRenderables(false, true);
 
 	m_pMainView->DrawViewModels(*m_pMainView->GetViewSetup(), true);
 
